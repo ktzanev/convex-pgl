@@ -1,0 +1,31 @@
+svg {
+  border: 1px solid lightGray;
+  box-shadow: 1px 1px 3px lightGray;
+}
+.angle {
+  display: inline-block;
+  width:4ex;
+}
+dt {
+  display: inline-block;
+  float:left;
+  text-align: right;
+  clear:both;
+}
+dd {
+  display: inline-block;
+  float:left;
+  margin: 0px 7px;
+}
+.lab {
+  width:17em;
+}
+.sublab{
+  width:4em;
+}
+.incalc {
+  font-size: 70px;
+  color: gray;
+  padding: 70px;
+  text-align: center;
+}

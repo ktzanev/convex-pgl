@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Projective actions on convexes</title>
+
+  <link rel="stylesheet" href="main.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
+  <script src="bigjs/bignumber.js"></script>
+  <script src="convexhullbig.js"></script>
+  <script src="mainCtrl.js"></script>
+</head>
+<body ng-app>
+  <div ng-controller="MainCtrl">
+    <div>
+      <input type="range" ng-model="numPts" min="3" max="35"> {{numPts}}
+      <button ng-click="startCalc(generateRandomPts);">Generate random points</button>
+      <button ng-click="startCalc(setToRegularPolygon)">Regular polygon</button>
+      <button ng-click="startCalc(doSym)">Make it symetric</button>
+    </div>
+    <div>
+      <button ng-click="startCalc(strToPts)">Set points</button>
+      <input type="text" ng-model="strPts" style="width:70%">
+    </div>
+    <div ng-hide="inCalc">
+      <svg viewBox="-2.5 -2.5 5 5" width="400px" height="400px">
+        <g transform="matrix(1,0,0,-1,0,0)">
+          <path ng-attr-d="{{svgPath(mainPath)}}" stroke="black" stroke-width=".03" fill="none" />
+          <path ng-attr-d="{{svgLine(over.v)}}" stroke="#EEE" stroke-width=".02" fill="none" />
+          <path ng-attr-d="{{svgPath(over.mainPath)}}" stroke="{{over.col}}" stroke-width=".03" fill="none" />
+          <circle ng-attr-cx="{{mainBarycentre.x.toFixed(2)}}" ng-attr-cy="{{mainBarycentre.y.toFixed(2)}}" r="0.03" stroke="black" stroke-width=".01" fill="blue" />
+        </g>
+        <text x="0" y="-2.29" font-size=".21" fill="blue" text-anchor="middle" opacity="0.49">
+          The convex hull
+        </text>
+      </svg>
+      <svg viewBox="-2.5 -2.5 5 5" width="400px" height="400px">
+        <g transform="matrix(1,0,0,-1,0,0)"  ng-mouseleave="outGrid()">
+          <circle ng-repeat="g in grid" ng-attr-cx="{{g.x}}" ng-attr-cy="{{g.y}}" r="0.03" ng-attr-fill="{{g.col}}"  ng-mouseenter="overGrid(g.x,g.y,g.col)"/>
+          <path ng-attr-d="{{svgPath(dualPath)}}" stroke="black" stroke-width=".03" fill="none" />
+          <path ng-attr-d="{{svgPath(over.dualPath)}}" stroke="{{over.col}}" stroke-width=".03" fill="none" />
+          <circle cx="0" cy="0" r="0.03" stroke="black" stroke-width=".01" fill="red" />
+          <circle ng-attr-cx="{{dualBarycentre.x.toFixed(2)}}" ng-attr-cy="{{dualBarycentre.y.toFixed(2)}}" r="0.03" stroke="black" stroke-width=".01" fill="yellow"/>
+          <path ng-attr-d="{{svgConjLine(dualBarycentre)}}" stroke="#070" stroke-width=".02" fill="none" />
+        </g>
+        <text x="0" y="-2.29" font-size=".21" fill="blue" text-anchor="middle" opacity="0.49">
+          The dual
+        </text>
+      </svg>
+      <div>Rescale transformed convex :
+        <select ng-model="rescale" ng-init="rescale='no-rescale'">
+          <option value="no-rescale" selected>no</option>
+          <option value="fit-area">to fit area</option>
+          <option value="keep-volume">to keep volume</option>
+        </select>
+      </div>
+      <dl>
+        <dt class="lab">Volume product (<b>VP</b>) :</dt>
+          <dd>{{mainBarycentre.s.toFixed(7) }} x {{dualBarycentre.s.toFixed(7) }} = {{volProd.toFixed(7) }}</dd>
+        <dt class="lab">Transformed Volume product (<b>TVP</b>) :</dt>
+          <dd>{{over.mainBarycentre.s.toFixed(7) }} x {{over.dualBarycentre.s.toFixed(7) }} = {{over.volProd.toFixed(7) }}</dd>
+        <dt class="lab">Volume différence (<b>TVP - VP</b>) :</dt>
+          <dd>{{over.volProd.toFixed(7) }} - {{volProd.toFixed(7) }} = {{over.diff.toFixed(7) }}</dd>
+      </dl>
+    </div>
+    <div ng-show="inCalc" class="incalc">
+      Calculating ...
+    </div>
+  </div>
+</body>
+</html>
