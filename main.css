@@ -29,3 +29,12 @@ dd {
   padding: 70px;
   text-align: center;
 }
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+a.mahlerlink {
+  margin-left: 1em;
+}

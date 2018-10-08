@@ -184,5 +184,14 @@ function MainCtrl($scope, $timeout) {
 
   // initial setup
   $scope.numPts = 7;
-  $scope.generateRandomPts();
+  var urla = /a=([^&]*)/.exec(window.location.search);
+  if (urla && urla.length > 1){
+    // get the coordinates from the 'a' get parameter
+    $scope.strPts = decodeURIComponent(urla[1]);
+    $scope.strToPts();
+  }
+  else{
+    // generate random points
+    $scope.generateRandomPts();
+  }
 }
