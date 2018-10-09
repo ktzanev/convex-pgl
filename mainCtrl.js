@@ -189,6 +189,10 @@ function MainCtrl($scope, $timeout) {
     // get the coordinates from the 'a' get parameter
     $scope.strPts = decodeURIComponent(urla[1]);
     $scope.strToPts();
+    if (/[&?]c/.exec(window.location.search)){
+      // set the string to convex hull (with 2 digits precision)
+      $scope.ptsToStr($scope.initialPath);
+    }
   }
   else{
     // generate random points
