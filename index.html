@@ -39,7 +39,7 @@
       </svg>
       <svg viewBox="-2.5 -2.5 5 5" width="400px" height="400px">
         <g transform="matrix(1,0,0,-1,0,0)"  ng-mouseleave="outGrid()">
-          <circle ng-repeat="g in grid" ng-attr-cx="{{g.x}}" ng-attr-cy="{{g.y}}" r="0.03" ng-attr-fill="{{g.col}}"  ng-mouseenter="overGrid(g.x,g.y,g.col)"/>
+          <circle ng-repeat="g in grid" ng-attr-cx="{{g.x}}" ng-attr-cy="{{g.y}}" r="0.03" ng-attr-fill="{{g.col}}"  ng-mouseenter="overGrid(g.x,g.y,g.col)" ng-click="startCalc(applyTransform)"/>
           <path ng-attr-d="{{svgPath(dualPath)}}" stroke="black" stroke-width=".03" fill="none" />
           <path ng-attr-d="{{svgPath(over.dualPath)}}" stroke="{{over.col}}" stroke-width=".03" fill="none" />
           <circle cx="0" cy="0" r="0.03" stroke="black" stroke-width=".01" fill="red" />

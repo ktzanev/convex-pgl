@@ -169,6 +169,11 @@ function MainCtrl($scope, $timeout) {
     $scope.over.diff = $scope.over.volProd.minus($scope.volProd);
   }
 
+  $scope.applyTransform = function() {
+    $scope.setPts($scope.over.mainPath);
+    $scope.ptsToStr($scope.initialPath);
+  }
+
   $scope.outGrid = function() {
     $scope.over = {};
   }
